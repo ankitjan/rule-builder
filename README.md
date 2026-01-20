@@ -447,3 +447,14 @@ The API should return data in one of these formats:
 - ✅ API-based field values with caching and pagination
 - ✅ Comprehensive test coverage
 - ✅ Demo application
+
+## Specifications
+
+Complete project specifications are maintained in the [`specs/`](./specs/) directory:
+
+- **[Requirements](./specs/requirements.md)** - Complete functional requirements with user stories and acceptance criteria
+- **[Design](./specs/design.md)** - Technical architecture, component design, and testing strategy  
+- **[Tasks](./specs/tasks.md)** - Implementation plan with current status and remaining work
+- **[Specs Overview](./specs/README.md)** - Guide to the specification documents
+
+The specifications provide comprehensive documentation of the component's features, architecture, and implementation approach.
