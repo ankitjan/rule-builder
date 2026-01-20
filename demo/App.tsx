@@ -139,78 +139,69 @@ const initialRule: RuleGroup = {
 };
 
 const App: React.FC = () => {
-  const [rule1, setRule1] = useState<RuleGroup>(initialRule);
-  const [rule2, setRule2] = useState<RuleGroup>({
-    id: 'root-2',
-    combinator: 'and',
-    rules: []
-  });
-  
-  const [isValid1, setIsValid1] = useState<boolean>(true);
-  const [isValid2, setIsValid2] = useState<boolean>(true);
-  const [errors1, setErrors1] = useState<ValidationError[]>([]);
-  const [errors2, setErrors2] = useState<ValidationError[]>([]);
+  const [rule, setRule] = useState<RuleGroup>(initialRule);
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const [errors, setErrors] = useState<ValidationError[]>([]);
   const [showOutput, setShowOutput] = useState<boolean>(true);
   const [showReadable, setShowReadable] = useState<boolean>(true);
 
-  const handleRule1Change = (newRule: RuleGroup) => {
-    setRule1(newRule);
-    console.log('Rule 1 changed:', newRule);
+  const handleRuleChange = (newRule: RuleGroup) => {
+    setRule(newRule);
+    console.log('Rule changed:', newRule);
   };
 
-  const handleRule2Change = (newRule: RuleGroup) => {
-    setRule2(newRule);
-    console.log('Rule 2 changed:', newRule);
+  const handleValidationChange = (valid: boolean, validationErrors: ValidationError[]) => {
+    setIsValid(valid);
+    setErrors(validationErrors);
+    console.log('Validation changed:', { valid, errors: validationErrors });
   };
 
-  const handleValidation1Change = (valid: boolean, validationErrors: ValidationError[]) => {
-    setIsValid1(valid);
-    setErrors1(validationErrors);
-    console.log('Validation 1 changed:', { valid, errors: validationErrors });
-  };
-
-  const handleValidation2Change = (valid: boolean, validationErrors: ValidationError[]) => {
-    setIsValid2(valid);
-    setErrors2(validationErrors);
-    console.log('Validation 2 changed:', { valid, errors: validationErrors });
-  };
-
-  const resetRule1ToEmpty = () => {
-    setRule1({
+  const resetToEmpty = () => {
+    setRule({
       id: 'root',
       combinator: 'and',
       rules: []
     });
   };
 
-  const resetRule2ToEmpty = () => {
-    setRule2({
-      id: 'root-2',
-      combinator: 'and',
-      rules: []
-    });
+  const resetToSample = () => {
+    setRule(initialRule);
   };
 
-  const resetRule1ToSample = () => {
-    setRule1(initialRule);
-  };
-
-  const loadSampleRule2 = () => {
-    setRule2({
-      id: 'root-2',
+  const loadAlternativeSample = () => {
+    setRule({
+      id: 'root',
       combinator: 'or',
       rules: [
         {
-          id: 'rule-2-1',
+          id: 'rule-alt-1',
           field: 'department',
           operator: 'equals',
           value: 'marketing'
         },
         {
-          id: 'rule-2-2',
+          id: 'rule-alt-2',
           field: 'salary',
-          operator: '<',
-          value: 40000
+          operator: 'between',
+          value: [40000, 80000]
+        },
+        {
+          id: 'nested-group-alt',
+          combinator: 'and',
+          rules: [
+            {
+              id: 'rule-alt-3',
+              field: 'isActive',
+              operator: 'equals',
+              value: true
+            },
+            {
+              id: 'rule-alt-4',
+              field: 'registrationDate',
+              operator: 'after',
+              value: '2023-01-01'
+            }
+          ]
         }
       ]
     });
@@ -219,8 +210,8 @@ const App: React.FC = () => {
   return (
     <div className="demo-container">
       <div className="demo-header">
-        <h1>Rule Builder Demo - Side by Side Comparison</h1>
-        <p>Interactive demonstration showing multiple Rule Builder instances</p>
+        <h1>Rule Builder Demo</h1>
+        <p>Interactive demonstration of the React Rule Builder component with all features enabled</p>
       </div>
 
       <div className="demo-section">
@@ -243,286 +234,190 @@ const App: React.FC = () => {
             Show Human Readable Output
           </label>
         </div>
-      </div>
-
-      {/* Side by Side Rule Builders */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr 1fr', 
-        gap: '2rem',
-        marginBottom: '2rem'
-      }}>
-        {/* Rule Builder 1 */}
-        <div className="demo-section" style={{ margin: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h2 style={{ margin: 0 }}>Rule Builder #1 - Sample Rule</h2>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                onClick={resetRule1ToEmpty}
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: '#6c757d',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem'
-                }}
-              >
-                Clear
-              </button>
-              <button
-                onClick={resetRule1ToSample}
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: '#007bff',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem'
-                }}
-              >
-                Sample
-              </button>
-            </div>
-          </div>
-          
-          <div style={{ marginBottom: '1rem' }}>
-            <strong>Status:</strong>{' '}
-            <span style={{ color: isValid1 ? '#28a745' : '#dc3545' }}>
-              {isValid1 ? '✓ Valid' : `✗ ${errors1.filter(e => e.severity === 'error').length} Error(s)`}
-            </span>
-          </div>
-          
-          <RuleBuilder
-            fields={sampleFields}
-            initialRule={rule1}
-            onChange={handleRule1Change}
-            onValidationChange={handleValidation1Change}
-            config={{
-              showJsonOutput: showOutput,
-              showReadableOutput: showReadable,
-              allowEmpty: true,
-              maxNestingDepth: 5,
-              dragAndDrop: true,
-              showNotToggle: false,
-              enableSaveLoad: true,
-              savedRulesStorageKey: 'rule-builder-demo-rules-1'
+        
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
+          <button
+            onClick={resetToEmpty}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#6c757d',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '0.875rem'
             }}
-            theme={{
-              colors: {
-                primary: '#007bff',
-                secondary: '#6c757d',
-                background: '#ffffff',
-                border: '#dee2e6',
-                error: '#dc3545',
-                warning: '#ffc107',
-                success: '#28a745'
-              }
+          >
+            🗑️ Clear All Rules
+          </button>
+          <button
+            onClick={resetToSample}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '0.875rem'
             }}
-          />
+          >
+            📝 Load Sample Rule
+          </button>
+          <button
+            onClick={loadAlternativeSample}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '0.875rem'
+            }}
+          >
+            🔄 Load Alternative Sample
+          </button>
         </div>
-
-        {/* Rule Builder 2 */}
-        <div className="demo-section" style={{ margin: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <h2 style={{ margin: 0 }}>Rule Builder #2 - New Rule</h2>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <button
-                onClick={resetRule2ToEmpty}
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: '#6c757d',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem'
-                }}
-              >
-                Clear
-              </button>
-              <button
-                onClick={loadSampleRule2}
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  backgroundColor: '#28a745',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  fontSize: '0.875rem'
-                }}
-              >
-                Sample
-              </button>
-            </div>
-          </div>
-          
-          <div style={{ marginBottom: '1rem' }}>
-            <strong>Status:</strong>{' '}
-            <span style={{ color: isValid2 ? '#28a745' : '#dc3545' }}>
-              {isValid2 ? '✓ Valid' : `✗ ${errors2.filter(e => e.severity === 'error').length} Error(s)`}
-            </span>
-          </div>
-          
-          <RuleBuilder
-            fields={sampleFields}
-            initialRule={rule2}
-            onChange={handleRule2Change}
-            onValidationChange={handleValidation2Change}
-            config={{
-              showJsonOutput: showOutput,
-              showReadableOutput: showReadable,
-              allowEmpty: true,
-              maxNestingDepth: 5,
-              dragAndDrop: true,
-              showNotToggle: false,
-              enableSaveLoad: true,
-              savedRulesStorageKey: 'rule-builder-demo-rules-2'
-            }}
-            theme={{
-              colors: {
-                primary: '#28a745',
-                secondary: '#6c757d',
-                background: '#ffffff',
-                border: '#dee2e6',
-                error: '#dc3545',
-                warning: '#ffc107',
-                success: '#28a745'
-              }
-            }}
-          />
+        
+        <div style={{ marginBottom: '1rem' }}>
+          <strong>Validation Status:</strong>{' '}
+          <span style={{ color: isValid ? '#28a745' : '#dc3545' }}>
+            {isValid ? '✓ Valid' : `✗ ${errors.filter(e => e.severity === 'error').length} Error(s)`}
+          </span>
         </div>
       </div>
 
-      {/* Side by Side JSON Output */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: '1fr 1fr', 
-        gap: '2rem',
-        marginBottom: '2rem'
-      }}>
-        <div className="demo-section" style={{ margin: 0 }}>
-          <h2>Rule #1 State (JSON)</h2>
-          <pre style={{
-            backgroundColor: '#f8f9fa',
-            padding: '1rem',
-            borderRadius: '4px',
-            overflow: 'auto',
-            fontSize: '0.875rem',
-            maxHeight: '300px'
-          }}>
-            {JSON.stringify(rule1, null, 2)}
-          </pre>
-        </div>
-
-        <div className="demo-section" style={{ margin: 0 }}>
-          <h2>Rule #2 State (JSON)</h2>
-          <pre style={{
-            backgroundColor: '#f8f9fa',
-            padding: '1rem',
-            borderRadius: '4px',
-            overflow: 'auto',
-            fontSize: '0.875rem',
-            maxHeight: '300px'
-          }}>
-            {JSON.stringify(rule2, null, 2)}
-          </pre>
-        </div>
+      {/* Main Rule Builder */}
+      <div className="demo-section">
+        <h2>Rule Builder</h2>
+        <RuleBuilder
+          fields={sampleFields}
+          initialRule={rule}
+          onChange={handleRuleChange}
+          onValidationChange={handleValidationChange}
+          config={{
+            showJsonOutput: showOutput,
+            showReadableOutput: showReadable,
+            allowEmpty: true,
+            maxNestingDepth: 5,
+            dragAndDrop: true,
+            showNotToggle: false,
+            enableSaveLoad: true,
+            savedRulesStorageKey: 'rule-builder-demo-rules'
+          }}
+          theme={{
+            colors: {
+              primary: '#007bff',
+              secondary: '#6c757d',
+              background: '#ffffff',
+              border: '#dee2e6',
+              error: '#dc3545',
+              warning: '#ffc107',
+              success: '#28a745'
+            }
+          }}
+        />
       </div>
 
-      {/* Validation Errors Side by Side */}
-      {(errors1.length > 0 || errors2.length > 0) && (
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: '1fr 1fr', 
-          gap: '2rem',
-          marginBottom: '2rem'
+      {/* Current Rule State */}
+      <div className="demo-section">
+        <h2>Current Rule State (JSON)</h2>
+        <pre style={{
+          backgroundColor: '#f8f9fa',
+          padding: '1rem',
+          borderRadius: '4px',
+          overflow: 'auto',
+          fontSize: '0.875rem',
+          maxHeight: '400px',
+          border: '1px solid #dee2e6'
         }}>
-          <div className="demo-section" style={{ margin: 0 }}>
-            <h2>Rule #1 Validation Errors</h2>
-            {errors1.length > 0 ? (
-              <div>
-                {errors1.map((error, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      padding: '0.5rem',
-                      marginBottom: '0.5rem',
-                      backgroundColor: error.severity === 'error' ? '#f8d7da' : '#fff3cd',
-                      border: `1px solid ${error.severity === 'error' ? '#f5c6cb' : '#ffeaa7'}`,
-                      borderRadius: '4px',
-                      color: error.severity === 'error' ? '#721c24' : '#856404'
-                    }}
-                  >
-                    <strong>{error.severity.toUpperCase()}:</strong> {error.message}
-                    {error.suggestions && error.suggestions.length > 0 && (
-                      <div style={{ marginTop: '0.25rem', fontSize: '0.875rem' }}>
-                        <em>Suggestion: {error.suggestions[0]}</em>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p style={{ color: '#28a745', fontStyle: 'italic' }}>No validation errors</p>
-            )}
-          </div>
+          {JSON.stringify(rule, null, 2)}
+        </pre>
+      </div>
 
-          <div className="demo-section" style={{ margin: 0 }}>
-            <h2>Rule #2 Validation Errors</h2>
-            {errors2.length > 0 ? (
-              <div>
-                {errors2.map((error, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      padding: '0.5rem',
-                      marginBottom: '0.5rem',
-                      backgroundColor: error.severity === 'error' ? '#f8d7da' : '#fff3cd',
-                      border: `1px solid ${error.severity === 'error' ? '#f5c6cb' : '#ffeaa7'}`,
-                      borderRadius: '4px',
-                      color: error.severity === 'error' ? '#721c24' : '#856404'
-                    }}
-                  >
-                    <strong>{error.severity.toUpperCase()}:</strong> {error.message}
-                    {error.suggestions && error.suggestions.length > 0 && (
-                      <div style={{ marginTop: '0.25rem', fontSize: '0.875rem' }}>
-                        <em>Suggestion: {error.suggestions[0]}</em>
-                      </div>
-                    )}
+      {/* Validation Errors */}
+      {errors.length > 0 && (
+        <div className="demo-section">
+          <h2>Validation Errors</h2>
+          <div>
+            {errors.map((error, index) => (
+              <div
+                key={index}
+                style={{
+                  padding: '0.75rem',
+                  marginBottom: '0.5rem',
+                  backgroundColor: error.severity === 'error' ? '#f8d7da' : '#fff3cd',
+                  border: `1px solid ${error.severity === 'error' ? '#f5c6cb' : '#ffeaa7'}`,
+                  borderRadius: '4px',
+                  color: error.severity === 'error' ? '#721c24' : '#856404'
+                }}
+              >
+                <strong>{error.severity.toUpperCase()}:</strong> {error.message}
+                {error.suggestions && error.suggestions.length > 0 && (
+                  <div style={{ marginTop: '0.5rem', fontSize: '0.875rem' }}>
+                    <em>💡 Suggestion: {error.suggestions[0]}</em>
                   </div>
-                ))}
+                )}
               </div>
-            ) : (
-              <p style={{ color: '#28a745', fontStyle: 'italic' }}>No validation errors</p>
-            )}
+            ))}
           </div>
         </div>
       )}
 
+      {/* Available Fields Reference */}
       <div className="demo-section">
         <h2>Available Fields Reference</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
           {sampleFields.map((field) => (
-            <div key={field.name} style={{ padding: '0.5rem', backgroundColor: '#f8f9fa', borderRadius: '4px' }}>
-              <strong>{field.label}</strong>
-              <div style={{ fontSize: '0.875rem', color: '#666' }}>
-                Type: {field.type}
+            <div key={field.name} style={{ 
+              padding: '1rem', 
+              backgroundColor: '#f8f9fa', 
+              borderRadius: '6px',
+              border: '1px solid #e9ecef'
+            }}>
+              <div style={{ fontWeight: 'bold', marginBottom: '0.5rem', color: '#495057' }}>
+                {field.label}
+              </div>
+              <div style={{ fontSize: '0.875rem', color: '#6c757d' }}>
+                <div><strong>Type:</strong> {field.type}</div>
+                <div><strong>Field:</strong> {field.name}</div>
                 {field.options && (
-                  <div>Options: {field.options.map(opt => opt.label).join(', ')}</div>
+                  <div style={{ marginTop: '0.25rem' }}>
+                    <strong>Options:</strong> {field.options.map(opt => opt.label).join(', ')}
+                  </div>
                 )}
                 {field.apiConfig && (
-                  <div style={{ color: '#10b981' }}>
-                    🌐 API: {field.apiConfig.endpoint}
+                  <div style={{ marginTop: '0.25rem', color: '#10b981' }}>
+                    <strong>🌐 API:</strong> {new URL(field.apiConfig.endpoint).hostname}
                     {field.apiConfig.pagination?.enabled && <span> (paginated)</span>}
                   </div>
                 )}
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Usage Instructions */}
+      <div className="demo-section">
+        <h2>How to Use</h2>
+        <div style={{ 
+          backgroundColor: '#e7f3ff', 
+          padding: '1rem', 
+          borderRadius: '6px',
+          border: '1px solid #b3d9ff'
+        }}>
+          <h3 style={{ margin: '0 0 0.5rem 0', color: '#0056b3' }}>Getting Started</h3>
+          <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+            <li>Click <strong>"+ Add Rule"</strong> to create individual conditions</li>
+            <li>Click <strong>"+ Add Group"</strong> to create nested rule groups</li>
+            <li>Use <strong>AND/OR</strong> combinators to control logic between rules</li>
+            <li>Try the <strong>💾 Save/Load</strong> button to manage rule libraries</li>
+            <li>Enable drag-and-drop to reorder rules and groups</li>
+            <li>Test API fields like "Country" and "City" to see dynamic data loading</li>
+            <li>Use "Skills" field to test multi-select functionality</li>
+          </ul>
         </div>
       </div>
     </div>
