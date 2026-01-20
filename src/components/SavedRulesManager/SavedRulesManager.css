@@ -1,0 +1,584 @@
+/* SavedRulesManager Component Styles - File Explorer Design */
+
+.file-explorer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem; /* Add padding to prevent edge clipping */
+}
+
+.file-explorer > .file-explorer__modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 800px;
+  max-height: 95vh; /* Increased from 90vh */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: auto; /* Center the modal */
+}
+
+.file-explorer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+}
+
+.file-explorer__header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 1.25rem;
+}
+
+.file-explorer__close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.file-explorer__close:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.file-explorer__toolbar {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 60px; /* Ensure minimum height */
+  flex-shrink: 0; /* Prevent shrinking */
+  position: relative; /* Ensure proper positioning */
+  z-index: 1; /* Ensure it's above other content */
+}
+
+.file-explorer__search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.file-explorer__search-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.file-explorer__search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.file-explorer__view-controls {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.file-explorer__view-button {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-explorer__view-button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.file-explorer__view-button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.file-explorer__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  min-width: 0; /* Allow shrinking */
+}
+
+.file-explorer__button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.file-explorer__button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.file-explorer__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.file-explorer__button--primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.file-explorer__button--primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.file-explorer__status {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.file-explorer__content {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 40vh; /* Reduced to give more space to toolbar */
+  background-color: white;
+  min-height: 200px; /* Ensure minimum height */
+}
+
+.file-explorer__tree {
+  padding: 0.5rem;
+}
+
+.file-explorer__empty {
+  padding: 2rem;
+  text-align: center;
+  color: #666;
+}
+
+.file-explorer__empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.file-explorer__empty-text {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.file-explorer__empty-subtext {
+  font-size: 0.875rem;
+  color: #999;
+}
+
+.file-explorer__item-container {
+  margin-bottom: 0.25rem;
+}
+
+.file-explorer__item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  gap: 0.5rem;
+}
+
+.file-explorer__item:hover {
+  background-color: #f8f9fa;
+}
+
+.file-explorer__item.selected {
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+}
+
+.file-explorer__expand-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+  color: #666;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-explorer__expand-button:hover {
+  background-color: #e0e0e0;
+  border-radius: 2px;
+}
+
+.file-explorer__icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.file-explorer__name {
+  flex: 1;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.file-explorer__item .file-explorer__actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.file-explorer__item:hover .file-explorer__actions {
+  opacity: 1;
+}
+
+.file-explorer__action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.875rem;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.file-explorer__action-button:hover {
+  background-color: #e0e0e0;
+}
+
+.file-explorer__children {
+  margin-left: 1rem;
+  border-left: 1px solid #e0e0e0;
+  padding-left: 0.5rem;
+}
+
+.file-explorer__list {
+  padding: 0.5rem;
+}
+
+.file-explorer__list-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.file-explorer__list-item:hover {
+  background-color: #f8f9fa;
+}
+
+.file-explorer__list-item.selected {
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+}
+
+.file-explorer__list-icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+
+.file-explorer__list-content {
+  flex: 1;
+}
+
+.file-explorer__list-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.file-explorer__list-description {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.file-explorer__list-meta {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+.file-explorer__list-actions {
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.file-explorer__list-item:hover .file-explorer__list-actions {
+  opacity: 1;
+}
+
+/* Modal Styles */
+.file-explorer__modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100;
+}
+
+.file-explorer__modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-explorer__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+}
+
+.file-explorer__modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.125rem;
+}
+
+.file-explorer__modal-header button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.file-explorer__modal-header button:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.file-explorer__modal-body {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.file-explorer__form-group {
+  margin-bottom: 1rem;
+}
+
+.file-explorer__form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.875rem;
+}
+
+.file-explorer__form-group input,
+.file-explorer__form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.file-explorer__form-group input:focus,
+.file-explorer__form-group textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.file-explorer__form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.file-explorer__modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+  flex-shrink: 0;
+}
+
+.file-explorer__modal-footer button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-explorer__modal-footer button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.file-explorer__modal-footer .file-explorer__button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.file-explorer__modal-footer .file-explorer__button:hover {
+  background-color: #f8f9fa;
+  border-color: #999;
+}
+
+.file-explorer__modal-footer .file-explorer__button--primary {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.file-explorer__modal-footer .file-explorer__button--primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .file-explorer {
+    padding: 0.5rem;
+  }
+  
+  .file-explorer > .file-explorer__modal-content {
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .file-explorer__toolbar {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+  
+  .file-explorer__search {
+    order: 1;
+    width: 100%;
+  }
+  
+  .file-explorer__view-controls {
+    order: 2;
+    align-self: flex-start;
+  }
+  
+  .file-explorer__actions {
+    order: 3;
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .file-explorer__button {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+  
+  .file-explorer__modal-content {
+    width: 95%;
+    margin: 1rem;
+  }
+  
+  .file-explorer__modal-footer {
+    flex-direction: column;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .file-explorer__item,
+  .file-explorer__button,
+  .file-explorer__action-button,
+  .file-explorer__close,
+  .file-explorer__modal-header button {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .file-explorer__item {
+    border-width: 2px;
+  }
+  
+  .file-explorer__item.selected {
+    border-width: 3px;
+  }
+}

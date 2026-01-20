@@ -1,0 +1,356 @@
+/* RuleBuilder Component Styles */
+
+.rule-builder {
+  font-family: var(--rb-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: var(--rb-font-size-medium, 1rem);
+  background-color: var(--rb-color-background, #ffffff);
+  border: 1px solid var(--rb-color-border, #dee2e6);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  padding: var(--rb-spacing-medium, 1rem);
+  min-height: 200px;
+  position: relative;
+}
+
+.rule-builder--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Header */
+.rule-builder__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--rb-spacing-medium, 1rem);
+  padding-bottom: var(--rb-spacing-small, 0.5rem);
+  border-bottom: 1px solid var(--rb-color-border, #dee2e6);
+}
+
+.rule-builder__controls {
+  display: flex;
+  gap: var(--rb-spacing-small, 0.5rem);
+}
+
+.rule-builder__button {
+  padding: var(--rb-spacing-small, 0.5rem) var(--rb-spacing-medium, 1rem);
+  border: 1px solid var(--rb-color-border, #dee2e6);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  background-color: var(--rb-color-background, #ffffff);
+  color: var(--rb-color-secondary, #6c757d);
+  font-size: var(--rb-font-size-small, 0.875rem);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rule-builder__button:hover:not(:disabled) {
+  background-color: var(--rb-color-primary, #007bff);
+  color: white;
+  border-color: var(--rb-color-primary, #007bff);
+}
+
+.rule-builder__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rule-builder__button--primary {
+  background-color: var(--rb-color-primary, #007bff);
+  color: white;
+  border-color: var(--rb-color-primary, #007bff);
+}
+
+.rule-builder__button--primary:hover:not(:disabled) {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.rule-builder__button--primary:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.6;
+}
+
+.rule-builder__button--secondary {
+  background-color: transparent;
+  color: var(--rb-color-secondary, #6c757d);
+}
+
+/* Validation */
+.rule-builder__validation {
+  display: flex;
+  align-items: center;
+  gap: var(--rb-spacing-small, 0.5rem);
+}
+
+.rule-builder__validation-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: var(--rb-font-size-small, 0.875rem);
+  font-weight: bold;
+}
+
+.rule-builder__validation-indicator.valid {
+  background-color: var(--rb-color-success, #28a745);
+  color: white;
+}
+
+.rule-builder__validation-indicator.invalid {
+  background-color: var(--rb-color-error, #dc3545);
+  color: white;
+}
+
+.rule-builder__validation-text {
+  font-size: var(--rb-font-size-small, 0.875rem);
+  font-weight: 500;
+}
+
+/* Content */
+.rule-builder__content {
+  min-height: 100px;
+}
+
+/* Error Display */
+.rule-builder__errors {
+  margin-top: var(--rb-spacing-medium, 1rem);
+  padding-top: var(--rb-spacing-medium, 1rem);
+  border-top: 1px solid var(--rb-color-border, #dee2e6);
+}
+
+.rule-builder__error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rb-spacing-small, 0.5rem);
+  padding: var(--rb-spacing-small, 0.5rem);
+  margin-bottom: var(--rb-spacing-small, 0.5rem);
+  background-color: #ffeaea;
+  border: 1px solid var(--rb-color-error, #dc3545);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  color: var(--rb-color-error, #dc3545);
+}
+
+.rule-builder__error-message {
+  font-weight: 500;
+  font-size: var(--rb-font-size-small, 0.875rem);
+}
+
+.rule-builder__error-suggestion {
+  font-size: var(--rb-font-size-small, 0.875rem);
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rule-builder__header {
+    flex-direction: column;
+    gap: var(--rb-spacing-small, 0.5rem);
+    align-items: stretch;
+  }
+  
+  .rule-builder__controls {
+    justify-content: center;
+  }
+  
+  .rule-builder__validation {
+    justify-content: center;
+  }
+}
+
+/* Focus styles for accessibility */
+.rule-builder__button:focus {
+  outline: 2px solid var(--rb-color-primary, #007bff);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .rule-builder {
+    border-width: 2px;
+  }
+  
+  .rule-builder__button {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .rule-builder__button {
+    transition: none;
+  }
+}
+
+/* Rule Output Section */
+.rule-builder__output {
+  margin-top: var(--rb-spacing-large, 1.5rem);
+  padding-top: var(--rb-spacing-large, 1.5rem);
+  border-top: 1px solid var(--rb-color-border, #dee2e6);
+}
+
+.rule-builder__output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--rb-spacing-medium, 1rem);
+}
+
+.rule-builder__output-header h3 {
+  margin: 0;
+  font-size: var(--rb-font-size-large, 1.125rem);
+  color: var(--rb-color-secondary, #6c757d);
+}
+
+.rule-builder__output-controls {
+  display: flex;
+  gap: var(--rb-spacing-small, 0.5rem);
+}
+
+.rule-builder__format-selector {
+  padding: var(--rb-spacing-small, 0.5rem);
+  border: 1px solid var(--rb-color-border, #dee2e6);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  background-color: var(--rb-color-background, #ffffff);
+  font-size: var(--rb-font-size-small, 0.875rem);
+  cursor: pointer;
+}
+
+.rule-builder__format-selector:focus {
+  outline: 2px solid var(--rb-color-primary, #007bff);
+  outline-offset: 2px;
+}
+
+.rule-builder__output-section {
+  margin-bottom: var(--rb-spacing-medium, 1rem);
+}
+
+.rule-builder__output-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--rb-spacing-small, 0.5rem);
+  font-weight: 500;
+  font-size: var(--rb-font-size-small, 0.875rem);
+  color: var(--rb-color-secondary, #6c757d);
+}
+
+.rule-builder__copy-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--rb-spacing-small, 0.5rem);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.rule-builder__copy-button:hover {
+  background-color: var(--rb-color-border, #dee2e6);
+}
+
+.rule-builder__copy-button:focus {
+  outline: 2px solid var(--rb-color-primary, #007bff);
+  outline-offset: 2px;
+}
+
+.rule-builder__output-content {
+  padding: var(--rb-spacing-medium, 1rem);
+  border: 1px solid var(--rb-color-border, #dee2e6);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  background-color: #f8f9fa;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: var(--rb-font-size-small, 0.875rem);
+  line-height: 1.4;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.rule-builder__output-content--readable {
+  font-family: var(--rb-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  background-color: #e8f4fd;
+  color: var(--rb-color-secondary, #6c757d);
+  font-style: italic;
+}
+
+.rule-builder__output-content--json,
+.rule-builder__output-content--mongodb {
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.rule-builder__output-content--sql {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.rule-builder__output-details {
+  margin-top: var(--rb-spacing-medium, 1rem);
+}
+
+.rule-builder__output-details summary {
+  cursor: pointer;
+  padding: var(--rb-spacing-small, 0.5rem);
+  background-color: var(--rb-color-border, #dee2e6);
+  border-radius: var(--rb-border-radius, 0.25rem);
+  font-weight: 500;
+  user-select: none;
+}
+
+.rule-builder__output-details summary:hover {
+  background-color: var(--rb-color-primary, #007bff);
+  color: white;
+}
+
+.rule-builder__output-details summary:focus {
+  outline: 2px solid var(--rb-color-primary, #007bff);
+  outline-offset: 2px;
+}
+
+.rule-builder__output-details[open] summary {
+  margin-bottom: var(--rb-spacing-medium, 1rem);
+}
+
+/* Responsive adjustments for output section */
+@media (max-width: 768px) {
+  .rule-builder__output-header {
+    flex-direction: column;
+    gap: var(--rb-spacing-small, 0.5rem);
+    align-items: stretch;
+  }
+  
+  .rule-builder__output-controls {
+    justify-content: center;
+  }
+  
+  .rule-builder__output-label {
+    flex-direction: column;
+    gap: var(--rb-spacing-small, 0.5rem);
+    align-items: stretch;
+  }
+  
+  .rule-builder__copy-button {
+    align-self: flex-end;
+  }
+}
+
+/* Print styles */
+@media print {
+  .rule-builder__output-controls,
+  .rule-builder__copy-button {
+    display: none;
+  }
+  
+  .rule-builder__output-content {
+    border: 1px solid #000;
+    background-color: white !important;
+    color: black !important;
+  }
+}
+/* Ensure SavedRulesManager modal appears above everything */
+.rule-builder .saved-rules-manager {
+  z-index: 10000;
+}

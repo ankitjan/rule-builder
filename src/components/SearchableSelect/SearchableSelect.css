@@ -1,0 +1,243 @@
+.searchable-select {
+  position: relative;
+  width: 100%;
+}
+
+/* Ensure dropdown is not clipped by parent containers */
+.searchable-select.dropdown-open {
+  z-index: 99998; /* Just below the dropdown itself */
+}
+
+.searchable-select.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchable-select input {
+  width: 100%;
+  padding: 6px 32px 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.searchable-select input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.searchable-select.has-error input {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+.searchable-select input:disabled {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.searchable-select input::placeholder {
+  color: #9ca3af;
+}
+
+.input-actions {
+  position: absolute;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  font-size: 14px;
+  color: #6b7280;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dropdown-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  pointer-events: auto;
+  transition: color 0.2s ease;
+}
+
+.dropdown-arrow:hover:not(:disabled) {
+  color: #374151;
+}
+
+.dropdown-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99999; /* Very high z-index to ensure it appears above everything */
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-height: 200px;
+  overflow-y: auto !important; /* Force scrolling */
+  overflow-x: hidden !important; /* Prevent horizontal overflow */
+  margin-top: 2px;
+  text-align: left; /* Ensure left alignment */
+}
+
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  min-height: 32px; /* Ensure consistent height */
+  box-sizing: border-box;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover,
+.dropdown-option.highlighted {
+  background-color: #f3f4f6;
+}
+
+.dropdown-option.selected {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 500;
+}
+
+.dropdown-option.selected.highlighted {
+  background-color: #dbeafe;
+}
+
+.dropdown-error {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  flex: 1;
+}
+
+.retry-button {
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 20px;
+}
+
+.retry-button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.retry-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-options,
+.loading-options {
+  padding: 8px 12px;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: left; /* Changed from center to left */
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.load-more-container {
+  padding: 4px 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.load-more-button {
+  width: 100%;
+  background-color: #f8fafc;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-more-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.load-more-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .searchable-select input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .dropdown {
+    max-height: 150px;
+  }
+}
+
+/* Global rule to prevent dropdown clipping - but preserve dropdown internal scrolling */
+.dropdown-open {
+  overflow: visible !important;
+}
+
+/* Ensure parent containers don't clip dropdowns, but preserve dropdown scrolling */
+.dropdown-open .rule-group-content,
+.dropdown-open .rule-group-items,
+.dropdown-open .rule-group-item,
+.dropdown-open .rule-item-content {
+  overflow: visible !important;
+}

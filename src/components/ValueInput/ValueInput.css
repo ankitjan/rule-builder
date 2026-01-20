@@ -1,0 +1,238 @@
+.value-input {
+  position: relative;
+  min-width: 120px;
+}
+
+.value-input input,
+.value-input select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.value-input input:focus,
+.value-input select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.value-input input:disabled,
+.value-input select:disabled {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.value-input input::placeholder {
+  color: #9ca3af;
+}
+
+/* Error states */
+.value-input.has-error input,
+.value-input.has-error select {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+.value-input .error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Number input specific styles */
+.value-input input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.value-input input[type="number"]::-webkit-outer-spin-button,
+.value-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Date input specific styles */
+.value-input input[type="date"] {
+  position: relative;
+}
+
+.value-input input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+
+/* Select specific styles */
+.value-input select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 32px;
+}
+
+.value-input select:disabled {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
+/* Remove background arrow for SearchableSelect to avoid double arrows */
+.searchable-select select {
+  background-image: none !important;
+  padding-right: 8px !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .value-input {
+    min-width: auto;
+  }
+  
+  .value-input input,
+  .value-input select {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+/* API-based select field styles */
+.select-container {
+  position: relative;
+  width: 100%;
+}
+
+.api-controls {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.api-error {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  flex: 1;
+}
+
+.retry-button,
+.refresh-button,
+.load-more-button {
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+}
+
+.retry-button:hover,
+.refresh-button:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.load-more-button {
+  background-color: #f8fafc;
+  color: #374151;
+  padding: 4px 8px;
+  height: auto;
+  min-width: auto;
+}
+
+.load-more-button:hover {
+  background-color: #e5e7eb;
+}
+
+.retry-button:disabled,
+.refresh-button:disabled,
+.load-more-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-options {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #6b7280;
+  width: 100%;
+}
+
+.no-options span {
+  flex: 1;
+}
+
+/* Loading state for select */
+.value-input select:disabled.loading {
+  background-color: #f9fafb;
+  color: #9ca3af;
+}
+
+/* API field indicator */
+.select-container::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
+  background-color: #10b981;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.select-container.has-api-error::after {
+  background-color: #dc2626;
+}
+
+.select-container.api-loading::after {
+  background-color: #f59e0b;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Responsive adjustments for API controls */
+@media (max-width: 768px) {
+  .api-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .api-error,
+  .no-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .retry-button,
+  .refresh-button {
+    align-self: flex-end;
+  }
+}

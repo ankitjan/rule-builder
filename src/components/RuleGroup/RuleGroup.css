@@ -1,0 +1,570 @@
+/* RuleGroup Component Styles */
+
+.rule-group {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 16px;
+  margin: 8px 0;
+  background-color: #fafafa;
+  position: relative;
+}
+
+.rule-group.level-0 {
+  background-color: #ffffff;
+  border: 2px solid #d0d0d0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rule-group.level-1 {
+  background-color: #f8f8f8;
+  border-color: #e0e0e0;
+  margin-left: 20px;
+  border-left: 4px solid #007bff;
+}
+
+.rule-group.level-2 {
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
+  margin-left: 40px;
+  border-left: 4px solid #28a745;
+}
+
+.rule-group.level-3 {
+  background-color: #e8e8e8;
+  border-color: #c0c0c0;
+  margin-left: 60px;
+  border-left: 4px solid #ffc107;
+}
+
+.rule-group.negated {
+  border-color: #ff6b6b;
+  background-color: #fff5f5;
+}
+
+.rule-group.negated .rule-group-header {
+  border-bottom-color: #ff6b6b;
+}
+
+.rule-group.drag-enabled {
+  transition: all 0.2s ease;
+}
+
+/* Group Header */
+.rule-group-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+  flex-wrap: wrap;
+}
+
+/* Group Level Indicator */
+.rule-group-level-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.level-badge {
+  background-color: #6c757d;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rule-group.level-0 .level-badge {
+  background-color: #007bff;
+}
+
+.rule-group.level-1 .level-badge {
+  background-color: #007bff;
+}
+
+.rule-group.level-2 .level-badge {
+  background-color: #28a745;
+}
+
+.rule-group.level-3 .level-badge {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+/* NOT Toggle */
+.rule-group-not {
+  display: flex;
+  align-items: center;
+}
+
+.not-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #666;
+}
+
+.not-toggle input[type="checkbox"] {
+  margin: 0;
+}
+
+.not-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rule-group.negated .not-label {
+  color: #d63031;
+  font-weight: 600;
+}
+
+/* Combinator Selector */
+.rule-group-combinator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rule-group-combinator label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.combinator-selector {
+  padding: 4px 8px;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+  font-weight: 500;
+  color: #28a745;
+  cursor: pointer;
+}
+
+.combinator-selector:hover:not(:disabled) {
+  background-color: #28a745;
+  color: white;
+}
+
+.combinator-selector:focus {
+  outline: 2px solid #28a745;
+  outline-offset: 2px;
+}
+
+.combinator-selector:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* Group Actions */
+.rule-group-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.group-action-add-rule,
+.group-action-add-group,
+.group-action-delete {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  color: #333;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.group-action-add-rule:hover,
+.group-action-add-group:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.group-action-delete {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.group-action-delete:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.group-action-add-rule:disabled,
+.group-action-add-group:disabled,
+.group-action-delete:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.group-action-add-rule:focus,
+.group-action-add-group:focus,
+.group-action-delete:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Group Content */
+.rule-group-content {
+  min-height: 20px;
+  overflow: visible; /* Allow dropdowns to be visible */
+  width: 100%; /* Ensure full width containment */
+}
+
+/* Rule Group Items Container */
+.rule-group-items {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: visible; /* Allow dropdowns to be visible */
+}
+
+.rule-group-empty {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+.rule-group-empty p {
+  margin: 0;
+}
+
+/* Rule Group Items */
+.rule-group-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  transition: all 0.2s ease;
+  width: 100%; /* Ensure items don't exceed container width */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+  overflow: visible; /* Allow dropdowns to be visible */
+}
+
+.rule-group-item:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.rule-group-item.dragging {
+  opacity: 0.6;
+  transform: rotate(1deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.rule-group-item.drag-over {
+  background-color: #e3f2fd;
+  border: 2px dashed #2196f3;
+  border-radius: 4px;
+  padding: 4px;
+  transform: scale(1.02);
+}
+
+/* Drag Handle */
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 100%;
+  min-height: 40px;
+  cursor: grab;
+  color: #999;
+  font-size: 16px;
+  user-select: none;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+  margin-right: 4px;
+}
+
+.drag-handle:hover {
+  color: #666;
+  background-color: #f0f0f0;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  background-color: #e0e0e0;
+}
+
+.drag-dots {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  line-height: 0.8;
+}
+
+/* Item Content Container */
+.rule-item-content {
+  flex: 1;
+  min-width: 0; /* Allow flex item to shrink below its content size */
+  width: 100%; /* Ensure full width usage */
+  overflow: visible; /* Allow dropdowns to be visible */
+}
+
+/* Reorder Controls */
+.reorder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 4px;
+}
+
+.reorder-button {
+  width: 24px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  background-color: white;
+  color: #666;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.reorder-button:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.reorder-button:disabled {
+  background-color: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.reorder-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 1px;
+}
+
+/* Combinator Display Between Items */
+.rule-combinator-display {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+  position: relative;
+  width: 100%;
+}
+
+.combinator-text {
+  background-color: #007bff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.rule-combinator-display::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #ddd;
+  z-index: 0;
+}
+
+/* Individual Rule Combinator */
+.rule-individual-combinator {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+  position: relative;
+  width: 100%;
+}
+
+.individual-combinator-selector {
+  padding: 4px 12px;
+  border: 1px solid #007bff;
+  border-radius: 16px;
+  background-color: white;
+  font-size: 12px;
+  font-weight: 600;
+  color: #007bff;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.individual-combinator-selector:hover:not(:disabled) {
+  background-color: #007bff;
+  color: white;
+}
+
+.individual-combinator-selector:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+.individual-combinator-selector:disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.rule-individual-combinator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #007bff;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+/* Group Combinator Display (for nested groups) */
+.rule-group-combinator-display {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+  position: relative;
+  width: 100%;
+}
+
+.rule-group-combinator-display .combinator-text {
+  background-color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.rule-group-combinator-display::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #28a745;
+  z-index: 0;
+  opacity: 0.3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .rule-group {
+    padding: 12px;
+    margin: 4px 0;
+  }
+  
+  .rule-group.level-1,
+  .rule-group.level-2,
+  .rule-group.level-3 {
+    margin-left: 10px;
+  }
+  
+  .rule-group-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .rule-group-actions {
+    margin-left: 0;
+    justify-content: center;
+  }
+  
+  .group-action-add-rule,
+  .group-action-add-group,
+  .group-action-delete {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .rule-group-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .drag-handle {
+    width: 100%;
+    height: 20px;
+    min-height: 20px;
+  }
+
+  .drag-dots {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+  }
+
+  .reorder-controls {
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  .group-action-add-rule,
+  .group-action-add-group,
+  .group-action-delete,
+  .rule-group-item,
+  .reorder-button,
+  .drag-handle {
+    transition: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .rule-group {
+    border-width: 2px;
+  }
+  
+  .combinator-text {
+    border: 1px solid white;
+  }
+  
+  .rule-combinator-display::before {
+    background-color: #000;
+    height: 2px;
+  }
+
+  .level-badge {
+    border: 1px solid white;
+  }
+
+  .drag-handle {
+    border: 1px solid #999;
+  }
+}
+
+/* Focus Visible Support */
+.rule-group *:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}

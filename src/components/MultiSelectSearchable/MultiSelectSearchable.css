@@ -1,0 +1,348 @@
+.multi-select-searchable {
+  position: relative;
+  width: 100%;
+}
+
+/* Ensure dropdown is not clipped by parent containers */
+.multi-select-searchable.dropdown-open {
+  z-index: 99998; /* Just below the dropdown itself */
+}
+
+.multi-select-searchable.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.multi-select-searchable:focus-within .input-container {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.multi-select-searchable.has-error .input-container {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+.selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 32px 4px 8px;
+  flex: 1;
+  min-height: 24px;
+}
+
+.selected-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 500;
+  max-width: 150px;
+}
+
+.selected-item .remove-item {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 0;
+  margin-left: 2px;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.selected-item .remove-item:hover:not(:disabled) {
+  background-color: #dc2626;
+  color: white;
+}
+
+.selected-item .remove-item:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  flex: 1;
+  min-width: 60px;
+  padding: 2px 4px;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-input:disabled {
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.input-actions {
+  position: absolute;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  font-size: 14px;
+  color: #6b7280;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dropdown-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  pointer-events: auto;
+  transition: color 0.2s ease;
+}
+
+.dropdown-arrow:hover:not(:disabled) {
+  color: #374151;
+}
+
+.dropdown-arrow:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99999; /* Very high z-index to ensure it appears above everything */
+  background: white !important; /* Force white background */
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-height: 200px;
+  overflow-y: auto !important; /* Force scrolling */
+  overflow-x: hidden !important; /* Prevent horizontal overflow */
+  margin-top: 2px;
+  text-align: left; /* Ensure left alignment */
+  visibility: visible !important; /* Force dropdown visibility */
+  opacity: 1 !important; /* Force dropdown opacity */
+  display: block !important; /* Force block display */
+}
+
+.dropdown-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f3f4f6;
+  display: flex !important; /* Force flex display */
+  align-items: center; /* Ensure proper alignment */
+  text-align: left;
+  min-height: 36px;
+  box-sizing: border-box;
+  position: relative; /* Ensure proper positioning context */
+  background-color: white; /* Ensure background is visible */
+  color: #374151; /* Ensure text color is visible */
+  visibility: visible !important; /* Force visibility */
+  opacity: 1 !important; /* Force opacity */
+}
+
+.dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.dropdown-option:hover,
+.dropdown-option.highlighted {
+  background-color: #f3f4f6;
+}
+
+.dropdown-option.selected {
+  background-color: #eff6ff;
+}
+
+.dropdown-option.selected.highlighted {
+  background-color: #dbeafe;
+}
+
+.option-content {
+  display: flex !important; /* Force flex display */
+  align-items: center !important; /* Force center alignment */
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  min-height: 20px; /* Ensure minimum height for content */
+  visibility: visible !important; /* Force visibility */
+  opacity: 1 !important; /* Force opacity */
+}
+
+.option-checkbox {
+  margin: 0 !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 16px !important;
+  height: 16px !important;
+  display: block !important; /* Force block display */
+  opacity: 1 !important; /* Force visibility */
+  position: relative; /* Ensure proper positioning */
+  z-index: 1; /* Ensure checkbox appears above other elements */
+  visibility: visible !important; /* Force visibility */
+  background-color: white; /* Ensure checkbox background */
+  border: 1px solid #d1d5db; /* Ensure checkbox border is visible */
+}
+
+.option-label {
+  flex: 1;
+  font-size: 14px !important;
+  text-align: left;
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  color: #374151 !important; /* Force text color */
+  display: block !important; /* Force block display */
+  opacity: 1 !important; /* Force visibility */
+  visibility: visible !important; /* Force visibility */
+  font-weight: normal; /* Ensure normal font weight */
+}
+
+.dropdown-error {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  flex: 1;
+}
+
+.retry-button {
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 20px;
+}
+
+.retry-button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.retry-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.no-options,
+.loading-options {
+  padding: 8px 12px;
+  color: #6b7280;
+  font-size: 14px;
+  text-align: left; /* Changed from center to left */
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.load-more-container {
+  padding: 4px 8px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.load-more-button {
+  width: 100%;
+  background-color: #f8fafc;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.load-more-button:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.load-more-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .search-input {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .dropdown {
+    max-height: 150px;
+  }
+  
+  .selected-item {
+    max-width: 120px;
+    font-size: 11px;
+  }
+}
+
+/* Global rule to prevent dropdown clipping - but preserve dropdown internal scrolling */
+.dropdown-open {
+  overflow: visible !important;
+}
+
+/* Ensure parent containers don't clip dropdowns, but preserve dropdown scrolling */
+.dropdown-open .rule-group-content,
+.dropdown-open .rule-group-items,
+.dropdown-open .rule-group-item,
+.dropdown-open .rule-item-content {
+  overflow: visible !important;
+}
