@@ -11,6 +11,8 @@ To add screenshots of the Rule Builder components:
 3. Save them in this directory with the following names:
    - `rule-builder-preview.png` - Main rule builder interface
    - `save-load-manager-preview.png` - Save/Load manager interface
+   - `fields-reference-preview.png` - Available fields reference section
+   - `output-formats-preview.png` - Output formats section
 4. The README.md will automatically display the images
 
 ## Recommended Screenshot Content
@@ -32,6 +34,23 @@ The screenshot should show:
 - Toolbar with all action buttons
 - Save rule dialog (if possible)
 - Storage information display
+
+### Fields Reference (`fields-reference-preview.png`)
+The screenshot should show:
+- Complete Available Fields Reference section
+- All field types displayed (string, number, date, boolean, select)
+- API-enabled fields with indicators
+- Clean grid layout with field details
+- Professional card-based design
+
+### Output Formats (`output-formats-preview.png`)
+The screenshot should show:
+- Human Readable output with complex rule
+- JSON output with proper formatting
+- Additional formats section (SQL, MongoDB)
+- Copy to clipboard buttons
+- Export dropdown functionality
+- Professional code formatting
 
 ## Image Specifications
 

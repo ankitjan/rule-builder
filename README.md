@@ -8,7 +8,6 @@ A React component for building complex rules through an intuitive visual interfa
 
 *Screenshot showing the Rule Builder component with nested rule groups, various field types, and the save/load functionality*
 
-> **Note**: To add a screenshot, run `npm run demo` and capture the component in action. Save the image as `docs/rule-builder-preview.png`.
 
 ### Component Structure
 
@@ -110,6 +109,142 @@ A React component for building complex rules through an intuitive visual interfa
 - **Quick Actions**: Save current rule (💾), create folders (📁+), delete selected (🗑️)
 - **Storage Info**: Real-time display of rule count, folder count, and storage usage
 - **Rule Metadata**: Shows rule complexity (rule count, group count) and last modified date
+
+### Available Fields Reference
+
+![Available Fields Reference](./docs/fields-reference-preview.png)
+
+*Screenshot showing the comprehensive field configuration reference with all supported field types*
+
+```
+┌─ Available Fields Reference ────────────────────────────────────────┐
+│                                                                     │
+│ ┌─ First Name ──────────┐ ┌─ Last Name ───────────┐ ┌─ Age ────────┐ │
+│ │ Type: string          │ │ Type: string          │ │ Type: number │ │
+│ │ Field: firstName      │ │ Field: lastName       │ │ Field: age   │ │
+│ └───────────────────────┘ └───────────────────────┘ └──────────────┘ │
+│                                                                     │
+│ ┌─ Email ───────────────┐ ┌─ Is Active ───────────┐ ┌─ Reg. Date ──┐ │
+│ │ Type: string          │ │ Type: boolean         │ │ Type: date   │ │
+│ │ Field: email          │ │ Field: isActive       │ │ Field: reg.. │ │
+│ └───────────────────────┘ └───────────────────────┘ └──────────────┘ │
+│                                                                     │
+│ ┌─ Department ──────────┐ ┌─ Country ─────────────┐ ┌─ City ───────┐ │
+│ │ Type: select          │ │ Type: select          │ │ Type: select │ │
+│ │ Field: department     │ │ Field: country        │ │ Field: city  │ │
+│ │ Options: Engineering, │ │ 🌐 API: restcountries │ │ 🌐 API: json │ │
+│ │ Marketing, Sales, HR, │ │        .com           │ │ placeholder  │ │
+│ │ Finance               │ │                       │ │ (paginated)  │ │
+│ └───────────────────────┘ └───────────────────────┘ └──────────────┘ │
+│                                                                     │
+│ ┌─ Salary ──────────────┐ ┌─ Skills ──────────────┐                 │
+│ │ Type: number          │ │ Type: select          │                 │
+│ │ Field: salary         │ │ Field: skills         │                 │
+│ │                       │ │ 🌐 API: jsonplaceholder│                 │
+│ │                       │ │ (Multi-select)        │                 │
+│ └───────────────────────┘ └───────────────────────┘                 │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Output Formats
+
+![Output Formats](./docs/output-formats-preview.png)
+
+*Screenshot showing the multiple output formats: Human Readable, JSON, SQL, and MongoDB*
+
+#### Human Readable Format
+```
+┌─ Human Readable Output ─────────────────────────────────────────────┐
+│ 📋 (First Name equals "John") AND (Age >= 25) AND                  │
+│    ((Department equals "Engineering") OR (Salary > 50000) OR       │
+│    (Skills in [1, 2, 3]))                                          │
+│                                                            [📋 Copy]│
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+#### JSON Format
+```
+┌─ JSON Output ───────────────────────────────────────────────────────┐
+│ {                                                          [📋 Copy]│
+│   "id": "root",                                                     │
+│   "combinator": "and",                                              │
+│   "rules": [                                                        │
+│     {                                                               │
+│       "id": "rule-1",                                               │
+│       "field": "firstName",                                         │
+│       "operator": "equals",                                         │
+│       "value": "John"                                               │
+│     },                                                              │
+│     {                                                               │
+│       "id": "rule-2",                                               │
+│       "field": "age",                                               │
+│       "operator": ">=",                                             │
+│       "value": 25                                                   │
+│     },                                                              │
+│     {                                                               │
+│       "id": "nested-group",                                         │
+│       "combinator": "or",                                           │
+│       "rules": [                                                    │
+│         {                                                           │
+│           "id": "rule-3",                                           │
+│           "field": "department",                                    │
+│           "operator": "equals",                                     │
+│           "value": "engineering"                                    │
+│         },                                                          │
+│         {                                                           │
+│           "id": "rule-4",                                           │
+│           "field": "salary",                                        │
+│           "operator": ">",                                          │
+│           "value": 50000                                            │
+│         },                                                          │
+│         {                                                           │
+│           "id": "rule-5",                                           │
+│           "field": "skills",                                        │
+│           "operator": "in",                                         │
+│           "value": [1, 2, 3]                                        │
+│         }                                                           │
+│       ]                                                             │
+│     }                                                               │
+│   ]                                                                 │
+│ }                                                                   │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+#### Additional Export Formats
+```
+┌─ Other Formats ─────────────────────────────────────────────────────┐
+│ ▼ SQL WHERE Clause                                        [📋 Copy] │
+│   WHERE firstName = 'John' AND age >= 25 AND                       │
+│   (department = 'engineering' OR salary > 50000 OR                 │
+│   skills IN (1, 2, 3))                                             │
+│                                                                     │
+│ ▼ MongoDB Query                                           [📋 Copy] │
+│   {                                                                 │
+│     "$and": [                                                       │
+│       { "firstName": "John" },                                      │
+│       { "age": { "$gte": 25 } },                                    │
+│       {                                                             │
+│         "$or": [                                                    │
+│           { "department": "engineering" },                          │
+│           { "salary": { "$gt": 50000 } },                          │
+│           { "skills": { "$in": [1, 2, 3] } }                       │
+│         ]                                                           │
+│       }                                                             │
+│     ]                                                               │
+│   }                                                                 │
+│                                                                     │
+│ [Export as...▼] [JSON] [SQL] [MongoDB] [Human Readable]            │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Output Features Illustrated
+
+- **Copy to Clipboard**: One-click copying for all formats (📋)
+- **Export Options**: Download rules in various formats
+- **Real-time Generation**: Outputs update as rules change
+- **Multiple Formats**: JSON (native), SQL WHERE clause, MongoDB query, Human-readable
+- **Collapsible Sections**: Expandable "Other Formats" section
+- **Professional Formatting**: Proper indentation and syntax highlighting
 
 ## Project Structure
 
